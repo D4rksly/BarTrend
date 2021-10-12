@@ -1,9 +1,7 @@
-package com.example.bartrend.utils
+package utils
 
-/**
- * A generic class that holds a value with its loading status.
- * @param <T>
- */
+import kotlin.contracts.ReturnsNotNull
+
 
 sealed class DomainResponse<out T : Any> {
 
@@ -15,5 +13,20 @@ sealed class DomainResponse<out T : Any> {
             is Success<*> -> "Success[data=$data]"
             is Error -> "Error[Message=$message]"
         }
+    }
+
+    @Suppress("UNCHECKED_CAST")
+    fun success(operation: (T) -> Unit): DomainResponse <T> {
+        if (this is Success<*>) operation(this.data as T)
+        return this
+    }
+
+    fun failure(operation: (String) -> Unit): DomainResponse <T> {
+        if (this is Error) operation(this.message)
+        return this
+    }
+
+    fun isSuccess(): Boolean {
+        return this is Success<*>
     }
 }

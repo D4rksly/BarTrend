@@ -1,7 +1,5 @@
 package com.example.bartrend.domain.model
 
-import java.util.*
-
 data class UserRegisterModel(
     val username: String,
     val password: String,
@@ -15,7 +13,7 @@ data class UserLoginModel(
 )
 
 data class UserModel(
-    val username: Int,
+    val username: String,
     val name: String,
     val email: String
 )
