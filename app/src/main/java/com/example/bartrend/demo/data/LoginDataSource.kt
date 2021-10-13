@@ -1,7 +1,7 @@
 package com.example.bartrend.demo.data
 
 import com.example.bartrend.demo.data.model.LoggedInUser
-import com.example.bartrend.utils.DomainResponse
+import utils.DomainResponse
 
 /**
  * Class that handles authentication w/ login credentials and retrieves user information.

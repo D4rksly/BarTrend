@@ -5,9 +5,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import android.util.Patterns
 import com.example.bartrend.demo.data.LoginRepository
-import com.example.bartrend.utils.DomainResponse
 
 import com.example.bartrend.R
+import utils.DomainResponse
 
 class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel() {
 

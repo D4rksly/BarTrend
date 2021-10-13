@@ -1,4 +1,4 @@
-package com.example.bartrend.domain.model
+package com.example.bartrend.ui.login.model
 
 data class UserRegisterModel(
     val username: String,

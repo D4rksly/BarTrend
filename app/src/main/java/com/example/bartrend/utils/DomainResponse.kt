@@ -1,5 +1,6 @@
 package utils
 
+import java.lang.Error
 import kotlin.contracts.ReturnsNotNull
 
 
@@ -16,9 +17,17 @@ sealed class DomainResponse<out T : Any> {
     }
 
     @Suppress("UNCHECKED_CAST")
-    fun success(operation: (T) -> Unit): DomainResponse <T> {
-        if (this is Success<*>) operation(this.data as T)
+    fun success(operation: (T) -> Unit): DomainResponse<T> {
+        if (this is Success<T>) operation(this.data)
         return this
+    }
+
+    @Suppress("UNCHECKED_CAST")
+    fun <E: Any> mapSuccess(operation: (T) -> E): DomainResponse<E> {
+        return when (this) {
+            is Success -> Success(operation(this.data))
+            is Error -> Error(this.message)
+        }
     }
 
     fun failure(operation: (String) -> Unit): DomainResponse <T> {
