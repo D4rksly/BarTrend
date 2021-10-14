@@ -17,11 +17,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-
-        if(!Connector.connect()) {
-            Toast.makeText(this, "No Connection", Toast.LENGTH_SHORT).show()
-        }
-
         val mainFrame = findViewById<FrameLayout>(R.id.mainFrame)
 
         if(savedInstanceState == null) {

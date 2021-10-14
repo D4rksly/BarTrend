@@ -3,6 +3,7 @@ package com.example.bartrend.ui.login
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.example.bartrend.R
@@ -26,15 +27,16 @@ class LoginFragment: Fragment(R.layout.fragment_login) {
         val button = activity?.findViewById<Button>(R.id.login)
 
         button?.setOnClickListener {
-            viewModel.register(UserRegisterModel("a", "b", "c", "d"))
+            viewModel.register(UserRegisterModel("michael90", "michaelpass", "Michael", "michael90@gmail.com"))
                 .observe(viewLifecycleOwner, Observer(::observeRegister))
         }
     }
 
     private fun observeRegister(state: LoginViewModel.State) {
         when (state) {
-            is LoginViewModel.State.Success -> TODO("Implement Success")
-            is LoginViewModel.State.Error -> TODO("Implement Error")
+            is LoginViewModel.State.Success -> Toast.makeText(context, "Welcome! ${state.userModel.name}", Toast.LENGTH_SHORT).show()
+            is LoginViewModel.State.Error -> Toast.makeText(context, state.error, Toast.LENGTH_SHORT).show()
+            is LoginViewModel.State.Loading -> Toast.makeText(context, "Loading", Toast.LENGTH_SHORT).show()
         }
     }
 }

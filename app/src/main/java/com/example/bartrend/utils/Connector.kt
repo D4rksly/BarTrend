@@ -9,6 +9,7 @@ import java.util.*
 import kotlin.collections.HashMap
 import kotlin.reflect.full.declaredMembers
 
+@Suppress("unused")
 object Connector {
 
     private var conn: Connection? = null
@@ -20,7 +21,7 @@ object Connector {
     private const val PORT = "3306"
     private const val DATABASE = "6Y7DlX2Fnq"
 
-    fun connect(): Boolean {
+    private fun connect(): Boolean {
         val connectionProps = Properties()
         connectionProps["user"] = USERNAME
         connectionProps["password"] = PASSWORD
@@ -40,7 +41,11 @@ object Connector {
     @Throws(SQLException::class)
     fun executeQuery(query: String): ResultSet {
         return try {
-            conn!!.createStatement().executeQuery(query)
+            if(conn != null || connect()) {
+                conn!!.createStatement().executeQuery(query)
+            } else {
+                throw NullPointerException()
+            }
         } catch (ex: NullPointerException) {
             throw NullPointerException("The connector was not instantiated")
         } catch (ex: SQLException) {
@@ -51,7 +56,11 @@ object Connector {
     @Throws(SQLException::class)
     fun execute(query: String): Boolean  {
         return try {
-            conn!!.createStatement().execute(query)
+            if(conn != null || connect()) {
+                conn!!.createStatement().execute(query)
+            } else {
+                throw NullPointerException()
+            }
         } catch (ex: NullPointerException) {
             throw NullPointerException("The connector was not instantiated")
         } catch (ex: SQLException) {
@@ -60,6 +69,7 @@ object Connector {
     }
 
     //region SELECT
+
     fun select(table: String): ResultSet {
         return executeQuery("SELECT * FROM $table")
     }
