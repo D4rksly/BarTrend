@@ -1,5 +1,6 @@
 package com.example.bartrend.utils
 
+import java.lang.NullPointerException
 import java.sql.Connection
 import java.sql.DriverManager
 import java.sql.ResultSet
@@ -40,6 +41,8 @@ object Connector {
     fun executeQuery(query: String): ResultSet {
         return try {
             conn!!.createStatement().executeQuery(query)
+        } catch (ex: NullPointerException) {
+            throw NullPointerException("The connector was not instantiated")
         } catch (ex: SQLException) {
             throw ex
         }
@@ -49,6 +52,8 @@ object Connector {
     fun execute(query: String): Boolean  {
         return try {
             conn!!.createStatement().execute(query)
+        } catch (ex: NullPointerException) {
+            throw NullPointerException("The connector was not instantiated")
         } catch (ex: SQLException) {
             throw ex
         }
