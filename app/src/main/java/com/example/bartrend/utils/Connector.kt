@@ -1,11 +1,12 @@
 package com.example.bartrend.utils
 
+import android.os.StrictMode
+import kotlinx.coroutines.runBlocking
 import java.lang.NullPointerException
 import java.sql.Connection
 import java.sql.DriverManager
 import java.sql.ResultSet
 import java.sql.SQLException
-import java.util.*
 import kotlin.collections.HashMap
 import kotlin.reflect.full.declaredMembers
 
@@ -22,14 +23,14 @@ object Connector {
     private const val DATABASE = "6Y7DlX2Fnq"
 
     private fun connect(): Boolean {
-        val connectionProps = Properties()
-        connectionProps["user"] = USERNAME
-        connectionProps["password"] = PASSWORD
-
         return try {
+            val policy = StrictMode.ThreadPolicy.Builder().permitAll().build()
+            StrictMode.setThreadPolicy(policy)
+
             conn = DriverManager.getConnection(
                 "jdbc:mysql://$SERVER:$PORT/$DATABASE",
-                connectionProps
+                USERNAME,
+                PASSWORD
             )
             true
         } catch (ex: Exception) {
