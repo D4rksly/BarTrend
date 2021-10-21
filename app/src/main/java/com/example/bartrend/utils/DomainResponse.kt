@@ -1,7 +1,4 @@
-package utils
-
-import java.lang.Error
-import kotlin.contracts.ReturnsNotNull
+package com.example.bartrend.utils
 
 
 sealed class DomainResponse<out T : Any> {
@@ -16,13 +13,11 @@ sealed class DomainResponse<out T : Any> {
         }
     }
 
-    @Suppress("UNCHECKED_CAST")
     fun success(operation: (T) -> Unit): DomainResponse<T> {
         if (this is Success<T>) operation(this.data)
         return this
     }
 
-    @Suppress("UNCHECKED_CAST")
     fun <E: Any> mapSuccess(operation: (T) -> E): DomainResponse<E> {
         return when (this) {
             is Success -> Success(operation(this.data))
@@ -30,7 +25,7 @@ sealed class DomainResponse<out T : Any> {
         }
     }
 
-    fun failure(operation: (String) -> Unit): DomainResponse <T> {
+    fun failure(operation: (String) -> Unit): DomainResponse<T> {
         if (this is Error) operation(this.message)
         return this
     }

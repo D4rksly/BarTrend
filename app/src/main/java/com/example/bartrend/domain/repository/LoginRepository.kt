@@ -6,7 +6,7 @@ import com.example.bartrend.domain.model.extensions.toRequest
 import com.example.bartrend.ui.login.model.UserLoginModel
 import com.example.bartrend.ui.login.model.UserModel
 import com.example.bartrend.ui.login.model.UserRegisterModel
-import utils.DomainResponse
+import com.example.bartrend.utils.DomainResponse
 
 class LoginRepository(private val loginDataSource: LoginDataSource) {
 

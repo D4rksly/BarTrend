@@ -1,4 +1,4 @@
-package utils
+package com.example.bartrend.utils
 
 import java.math.BigInteger
 import java.security.MessageDigest

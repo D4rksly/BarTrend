@@ -4,8 +4,8 @@ import com.example.bartrend.domain.model.request.UserLoginRequest
 import com.example.bartrend.domain.model.request.UserRegisterRequest
 import com.example.bartrend.domain.model.response.UserModelResponse
 import com.example.bartrend.utils.Connector
-import utils.DomainResponse
-import utils.MD5
+import com.example.bartrend.utils.DomainResponse
+import com.example.bartrend.utils.MD5
 import java.lang.NullPointerException
 import java.sql.SQLIntegrityConstraintViolationException
 
