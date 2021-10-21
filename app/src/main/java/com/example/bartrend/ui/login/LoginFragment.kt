@@ -43,7 +43,7 @@ class LoginFragment: Fragment(R.layout.fragment_login) {
             login.setOnClickListener {
                 viewModel.login(
                     UserLoginModel(
-                        username.text.toString(),
+                        email.text.toString(),
                         password.text.toString()
                     )
                 )
