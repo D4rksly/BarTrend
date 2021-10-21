@@ -18,6 +18,9 @@ object Navigation {
     val navigationStack : MutableList<Fragment> = mutableListOf()
 }
 
+/**
+ * Goes to the previous screen on the navigation stack
+ */
 fun FragmentActivity.back(): Boolean {
     val mainFrame = findViewById<FrameLayout>(R.id.mainFrame)
 
@@ -34,7 +37,24 @@ fun FragmentActivity.back(): Boolean {
     return false
 }
 
+/**
+ * Navigates to a given screen composed by a fragment
+ */
 fun FragmentActivity.navigate(fragment: Fragment) {
+    val mainFrame = findViewById<FrameLayout>(R.id.mainFrame)
+
+    val ft = supportFragmentManager.beginTransaction()
+    ft.replace(mainFrame.id, fragment::class.java.newInstance())
+    ft.commit()
+
+    navigationStack.add(fragment)
+}
+
+/**
+ * Navigates to a given screen composed by a fragment
+ * and persists the data inside that fragment
+ */
+fun FragmentActivity.navigateAndPersist(fragment: Fragment) {
     val mainFrame = findViewById<FrameLayout>(R.id.mainFrame)
 
     val ft = supportFragmentManager.beginTransaction()
@@ -44,13 +64,13 @@ fun FragmentActivity.navigate(fragment: Fragment) {
     navigationStack.add(fragment)
 }
 
-fun FragmentActivity.navigateAndClear(fragment: Fragment) {
-    val mainFrame = findViewById<FrameLayout>(R.id.mainFrame)
-
-    val ft = supportFragmentManager.beginTransaction()
-    ft.replace(mainFrame.id, fragment::class.java.newInstance())
-    ft.commit()
-
-    navigationStack.add(fragment)
+/**
+ * Navigates to a given screen composed by a fragment
+ * and sets that screen as the initial screen of the stack
+ */
+fun FragmentActivity.navigateAndReset(fragment: Fragment) {
+    navigationStack.clear()
+    navigate(fragment)
 }
+
 
