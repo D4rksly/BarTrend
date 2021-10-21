@@ -13,8 +13,6 @@ import kotlin.reflect.full.declaredMembers
 @Suppress("unused")
 object Connector {
 
-    private var conn: Connection? = null
-
     private const val USERNAME = "6Y7DlX2Fnq"
     private const val PASSWORD = "UMQ09Ei02b"
 
@@ -22,28 +20,27 @@ object Connector {
     private const val PORT = "3306"
     private const val DATABASE = "6Y7DlX2Fnq"
 
-    private fun connect(): Boolean {
+    private fun connect(): Connection? {
         return try {
             val policy = StrictMode.ThreadPolicy.Builder().permitAll().build()
             StrictMode.setThreadPolicy(policy)
-
-            conn = DriverManager.getConnection(
+            DriverManager.getConnection(
                 "jdbc:mysql://$SERVER:$PORT/$DATABASE",
                 USERNAME,
                 PASSWORD
             )
-            true
         } catch (ex: Exception) {
             ex.printStackTrace()
-            false
+            null
         }
     }
 
     @Throws(SQLException::class)
     fun executeQuery(query: String): ResultSet {
+        val conn = connect()
         return try {
-            if(conn != null || connect()) {
-                conn!!.createStatement().executeQuery(query)
+            if(conn != null) {
+                conn.createStatement().executeQuery(query)
             } else {
                 throw NullPointerException()
             }
@@ -56,9 +53,10 @@ object Connector {
 
     @Throws(SQLException::class)
     fun execute(query: String): Boolean  {
+        val conn = connect()
         return try {
-            if(conn != null || connect()) {
-                conn!!.createStatement().execute(query)
+            if(conn != null) {
+                conn.createStatement().execute(query)
             } else {
                 throw NullPointerException()
             }
