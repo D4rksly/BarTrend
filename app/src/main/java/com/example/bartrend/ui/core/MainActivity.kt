@@ -1,9 +1,12 @@
 package com.example.bartrend.ui.core
 
+import android.app.Activity
 import android.os.Bundle
 import android.widget.FrameLayout
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
 import com.example.bartrend.R
 import com.example.bartrend.ui.login.LoginFragment
 import com.example.bartrend.utils.Connector
@@ -17,13 +20,14 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val mainFrame = findViewById<FrameLayout>(R.id.mainFrame)
-
-        if(savedInstanceState == null) {
-            val ft = supportFragmentManager.beginTransaction()
-            val loginFragment = LoginFragment()
-            ft.add(mainFrame.id, loginFragment)
-            ft.commit()
-        }
+        navigate(LoginFragment())
     }
+}
+
+fun FragmentActivity.navigate(fragment: Fragment) {
+    val mainFrame = findViewById<FrameLayout>(R.id.mainFrame)
+
+    val ft = supportFragmentManager.beginTransaction()
+    ft.replace(mainFrame.id, fragment)
+    ft.commit()
 }
