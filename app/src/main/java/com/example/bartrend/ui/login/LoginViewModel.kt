@@ -20,14 +20,16 @@ class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel()
 
     fun register(registerModel: UserRegisterModel): LiveData<State> {
         val result: MutableLiveData<State> = MutableLiveData(State.Loading)
+
         viewModelScope.launch {
-            loginRepository.register(registerModel)
+            loginRepository.checkEmailAvailability(registerModel.email)
                 .success {
-                    result.value = State.Success(it)
-                }.failure {
-                    result.value = State.Error(it)
-                }
+                    loginRepository.register(registerModel)
+                        .success { result.value = State.Success(it) }
+                        .failure { result.value = State.Error(it) }
+                }.failure {  result.value = State.Error(it) }
         }
+
         return result
     }
 

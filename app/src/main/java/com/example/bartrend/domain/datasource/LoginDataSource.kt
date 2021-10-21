@@ -61,14 +61,14 @@ class LoginDataSource {
         }
     }
 
-    fun checkEmailAvailability(email: String): DomainResponse<String> {
+    fun checkEmailAvailability(email: String): DomainResponse<Unit> {
         return try {
             val result = Connector.select(USERS_TABLE, Pair("email", email))
 
             if(result.next()) {
                 DomainResponse.Error("Email already registered")
             } else {
-                DomainResponse.Success("Email Available")
+                DomainResponse.Success(Unit)
             }
         } catch (ex: NullPointerException) {
             DomainResponse.Error("Connection Failed")

@@ -28,7 +28,7 @@ class LoginRepository(private val loginDataSource: LoginDataSource) {
         }
     }
 
-    fun checkEmailAvailability(email: String): DomainResponse<String> {
+    fun checkEmailAvailability(email: String): DomainResponse<Unit> {
         return loginDataSource.checkEmailAvailability(email)
     }
 
