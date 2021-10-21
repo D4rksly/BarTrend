@@ -14,6 +14,8 @@ import com.example.bartrend.domain.repository.LoginRepository
 import com.example.bartrend.ui.login.model.UserRegisterModel
 import com.example.bartrend.utils.ViewModelFactory
 import com.example.bartrend.utils.extensions.back
+import com.example.bartrend.utils.extensions.isEmailValid
+import java.lang.Exception
 
 class RegisterFragment: Fragment(R.layout.fragment_register) {
 
@@ -36,9 +38,16 @@ class RegisterFragment: Fragment(R.layout.fragment_register) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setupListeners()
+    }
 
+    private fun setupListeners() {
         with(binding) {
-            register.setOnClickListener { register() }
+            register.setOnClickListener {
+                if(areFieldsValid()) {
+                    register()
+                }
+            }
 
             cancel.setOnClickListener {
                 requireActivity().back()
@@ -46,7 +55,22 @@ class RegisterFragment: Fragment(R.layout.fragment_register) {
         }
     }
 
-    fun register() {
+    private fun areFieldsValid(): Boolean {
+        with(binding) {
+            if(!email.text.toString().isEmailValid()) {
+                Toast.makeText(context, "Email Invalid", Toast.LENGTH_SHORT).show()
+                return false
+            }
+
+            if(password.text.toString() != passwordConfirm.text.toString()) {
+                Toast.makeText(context, "Passwords don't match", Toast.LENGTH_SHORT).show()
+                return false
+            }
+        }
+        return true
+    }
+
+    private fun register() {
         with(binding) {
             viewModel.register(
                 UserRegisterModel(
