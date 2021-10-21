@@ -1,13 +1,12 @@
-package com.example.bartrend.domain.model
+package com.example.bartrend.domain.model.request
 
 data class UserRegisterRequest(
-    val username: String,
-    val password: String,
+    val email: String,
     val name: String,
-    val email: String
+    val password: String
 )
 
 data class UserLoginRequest(
-    val username: String,
+    val email: String,
     val password: String
 )

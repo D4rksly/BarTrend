@@ -13,8 +13,8 @@ import kotlin.reflect.full.declaredMembers
 @Suppress("unused")
 object Connector {
 
-    private const val USERNAME = "6Y7DlX2Fnq"
-    private const val PASSWORD = "UMQ09Ei02b"
+    private const val DB_USERNAME = "6Y7DlX2Fnq"
+    private const val DB_PASSWORD = "UMQ09Ei02b"
 
     private const val SERVER = "remotemysql.com"
     private const val PORT = "3306"
@@ -26,8 +26,8 @@ object Connector {
             StrictMode.setThreadPolicy(policy)
             DriverManager.getConnection(
                 "jdbc:mysql://$SERVER:$PORT/$DATABASE",
-                USERNAME,
-                PASSWORD
+                DB_USERNAME,
+                DB_PASSWORD
             )
         } catch (ex: Exception) {
             ex.printStackTrace()

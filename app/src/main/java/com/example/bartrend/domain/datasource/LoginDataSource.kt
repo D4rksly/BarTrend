@@ -1,16 +1,13 @@
 package com.example.bartrend.domain.datasource
 
-import com.example.bartrend.domain.model.UserLoginRequest
-import com.example.bartrend.domain.model.UserModelResponse
-import com.example.bartrend.domain.model.UserRegisterRequest
+import com.example.bartrend.domain.model.request.UserLoginRequest
+import com.example.bartrend.domain.model.request.UserRegisterRequest
+import com.example.bartrend.domain.model.response.UserModelResponse
 import com.example.bartrend.utils.Connector
-import kotlinx.coroutines.coroutineScope
 import utils.DomainResponse
 import utils.MD5
 import java.lang.NullPointerException
-import java.sql.ResultSet
 import java.sql.SQLIntegrityConstraintViolationException
-import kotlin.coroutines.coroutineContext
 
 class LoginDataSource {
 
@@ -22,23 +19,21 @@ class LoginDataSource {
         return try {
 
             Connector.insert(USERS_TABLE, hashMapOf(
-                "username" to userRegisterModel.username,
-                "password" to MD5.encrypt(userRegisterModel.password),
+                "email" to userRegisterModel.email,
                 "name" to userRegisterModel.name,
-                "email" to userRegisterModel.email
+                "password" to MD5.encrypt(userRegisterModel.password)
             ))
 
             DomainResponse.Success(
                 UserModelResponse(
-                    username = userRegisterModel.username,
-                    name = userRegisterModel.name,
-                    email = userRegisterModel.email
+                    email = userRegisterModel.email,
+                    name = userRegisterModel.name
                 )
             )
         } catch (ex: NullPointerException) {
             DomainResponse.Error("Connection Failed")
         } catch (ex: SQLIntegrityConstraintViolationException) {
-            DomainResponse.Error("Username already Exists")
+            DomainResponse.Error("Email already Exists")
         }
     }
 
@@ -46,7 +41,7 @@ class LoginDataSource {
         try {
             val result = Connector.select(
                 USERS_TABLE, hashMapOf(
-                    "username" to userLoginModel.username,
+                    "email" to userLoginModel.email,
                     "password" to MD5.encrypt(userLoginModel.password)
                 )
             )
@@ -54,27 +49,26 @@ class LoginDataSource {
             return if(result.next()) {
                 DomainResponse.Success(
                     UserModelResponse(
-                        username = result.getString("username"),
-                        name = result.getString("name"),
-                        email = result.getString("email")
+                        email = result.getString("email"),
+                        name = result.getString("name")
                     )
                 )
             } else {
-                DomainResponse.Error("Username or Password Invalid")
+                DomainResponse.Error("Email or Password Invalid")
             }
         } catch (ex: NullPointerException) {
             return DomainResponse.Error("Connection Failed")
         }
     }
 
-    fun checkUsernameAvailability(username: String): DomainResponse<String> {
+    fun checkEmailAvailability(email: String): DomainResponse<String> {
         return try {
-            val result = Connector.select(USERS_TABLE, Pair("username", username))
+            val result = Connector.select(USERS_TABLE, Pair("email", email))
 
             if(result.next()) {
-                DomainResponse.Error("Username already exists")
+                DomainResponse.Error("Email already registered")
             } else {
-                DomainResponse.Success("Username Available")
+                DomainResponse.Success("Email Available")
             }
         } catch (ex: NullPointerException) {
             DomainResponse.Error("Connection Failed")

@@ -28,8 +28,8 @@ class LoginRepository(private val loginDataSource: LoginDataSource) {
         }
     }
 
-    fun checkUsernameAvailability(username: String): DomainResponse<String> {
-        return loginDataSource.checkUsernameAvailability(username)
+    fun checkEmailAvailability(email: String): DomainResponse<String> {
+        return loginDataSource.checkEmailAvailability(email)
     }
 
     fun logout() {

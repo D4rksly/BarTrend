@@ -1,19 +1,17 @@
 package com.example.bartrend.ui.login.model
 
 data class UserRegisterModel(
-    val username: String,
-    val password: String,
+    val email: String,
     val name: String,
-    val email: String
+    val password: String
 )
 
 data class UserLoginModel(
-    val username: String,
+    val email: String,
     val password: String
 )
 
 data class UserModel(
-    val username: String,
-    val name: String,
-    val email: String
+    val email: String,
+    val name: String
 )

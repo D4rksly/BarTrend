@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -14,9 +13,7 @@ import com.example.bartrend.domain.datasource.LoginDataSource
 import com.example.bartrend.domain.repository.LoginRepository
 import com.example.bartrend.ui.core.navigate
 import com.example.bartrend.ui.login.model.UserLoginModel
-import com.example.bartrend.ui.login.model.UserRegisterModel
 import com.example.bartrend.utils.ViewModelFactory
-import java.util.*
 
 class LoginFragment: Fragment(R.layout.fragment_login) {
 

@@ -1,7 +1,6 @@
-package com.example.bartrend.domain.model
+package com.example.bartrend.domain.model.response
 
 data class UserModelResponse(
-    val username: String,
-    val name: String,
-    val email: String
+    val email: String,
+    val name: String
 )
