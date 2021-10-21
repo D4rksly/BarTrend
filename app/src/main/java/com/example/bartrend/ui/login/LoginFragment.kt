@@ -11,6 +11,7 @@ import com.example.bartrend.R
 import com.example.bartrend.databinding.FragmentLoginBinding
 import com.example.bartrend.domain.datasource.LoginDataSource
 import com.example.bartrend.domain.repository.LoginRepository
+import com.example.bartrend.ui.core.Navigation
 import com.example.bartrend.ui.core.navigate
 import com.example.bartrend.ui.login.model.UserLoginModel
 import com.example.bartrend.utils.ViewModelFactory
@@ -49,7 +50,7 @@ class LoginFragment: Fragment(R.layout.fragment_login) {
             }
 
             register.setOnClickListener {
-                requireActivity().navigate(RegisterFragment())
+                requireActivity().navigate(Navigation.REGISTER)
             }
         }
     }

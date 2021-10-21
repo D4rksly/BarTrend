@@ -20,14 +20,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        navigate(LoginFragment())
+        navigate(Navigation.LOGIN)
     }
-}
-
-fun FragmentActivity.navigate(fragment: Fragment) {
-    val mainFrame = findViewById<FrameLayout>(R.id.mainFrame)
-
-    val ft = supportFragmentManager.beginTransaction()
-    ft.replace(mainFrame.id, fragment)
-    ft.commit()
 }
