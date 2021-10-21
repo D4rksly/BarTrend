@@ -57,6 +57,21 @@ class RegisterFragment: Fragment(R.layout.fragment_register) {
 
     private fun areFieldsValid(): Boolean {
         with(binding) {
+            if(name.text.isEmpty()) {
+                Toast.makeText(context, "Name Required", Toast.LENGTH_SHORT).show()
+                return false
+            }
+
+            if(email.text.isEmpty()) {
+                Toast.makeText(context, "Email Required", Toast.LENGTH_SHORT).show()
+                return false
+            }
+
+            if(password.text.isEmpty()) {
+                Toast.makeText(context, "Password Required", Toast.LENGTH_SHORT).show()
+                return false
+            }
+
             if(!email.text.toString().isEmailValid()) {
                 Toast.makeText(context, "Email Invalid", Toast.LENGTH_SHORT).show()
                 return false
