@@ -30,4 +30,17 @@ class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel()
         }
         return result
     }
+
+    fun login(loginModel: UserLoginModel): LiveData<State> {
+        val result: MutableLiveData<State> = MutableLiveData(State.Loading)
+        viewModelScope.launch {
+            loginRepository.login(loginModel)
+                .success {
+                    result.value = State.Success(it)
+                }.failure {
+                    result.value = State.Error(it)
+                }
+        }
+        return result
+    }
 }
