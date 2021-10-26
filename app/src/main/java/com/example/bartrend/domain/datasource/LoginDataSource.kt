@@ -12,7 +12,7 @@ import java.sql.SQLIntegrityConstraintViolationException
 class LoginDataSource {
 
     companion object {
-        const val USERS_TABLE = "Users"
+        private const val USERS_TABLE = "Users"
     }
 
     fun register(userRegisterModel: UserRegisterRequest): DomainResponse<UserModelResponse> {

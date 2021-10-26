@@ -1,4 +1,4 @@
-package com.example.bartrend.ui.login
+package com.example.bartrend.ui.login.view
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -11,11 +11,11 @@ import com.example.bartrend.R
 import com.example.bartrend.databinding.FragmentRegisterBinding
 import com.example.bartrend.domain.datasource.LoginDataSource
 import com.example.bartrend.domain.repository.LoginRepository
+import com.example.bartrend.ui.login.LoginViewModel
 import com.example.bartrend.ui.login.model.UserRegisterModel
 import com.example.bartrend.utils.ViewModelFactory
 import com.example.bartrend.utils.extensions.back
 import com.example.bartrend.utils.extensions.isEmailValid
-import java.lang.Exception
 
 class RegisterFragment: Fragment(R.layout.fragment_register) {
 

@@ -1,4 +1,4 @@
-package com.example.bartrend.ui.login
+package com.example.bartrend.ui.login.view
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -12,6 +12,7 @@ import com.example.bartrend.databinding.FragmentLoginBinding
 import com.example.bartrend.domain.datasource.LoginDataSource
 import com.example.bartrend.domain.repository.LoginRepository
 import com.example.bartrend.ui.core.Navigation
+import com.example.bartrend.ui.login.LoginViewModel
 import com.example.bartrend.ui.login.model.UserLoginModel
 import com.example.bartrend.utils.ViewModelFactory
 import com.example.bartrend.utils.extensions.navigate

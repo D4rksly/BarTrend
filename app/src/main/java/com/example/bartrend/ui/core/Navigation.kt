@@ -1,7 +1,7 @@
 package com.example.bartrend.ui.core
 
-import com.example.bartrend.ui.login.LoginFragment
-import com.example.bartrend.ui.login.RegisterFragment
+import com.example.bartrend.ui.login.view.LoginFragment
+import com.example.bartrend.ui.login.view.RegisterFragment
 
 object Navigation {
     //Login
