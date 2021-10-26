@@ -5,7 +5,7 @@ import com.example.bartrend.domain.model.request.UserRegisterRequest
 import com.example.bartrend.domain.model.response.UserModelResponse
 import com.example.bartrend.utils.Connector
 import com.example.bartrend.utils.DomainResponse
-import com.example.bartrend.utils.MD5
+import com.example.bartrend.utils.extensions.toSHA256
 import java.lang.NullPointerException
 import java.sql.SQLIntegrityConstraintViolationException
 
@@ -21,7 +21,7 @@ class LoginDataSource {
             Connector.insert(USERS_TABLE, hashMapOf(
                 "email" to userRegisterModel.email,
                 "name" to userRegisterModel.name,
-                "password" to MD5.encrypt(userRegisterModel.password)
+                "password" to userRegisterModel.password.toSHA256()
             ))
 
             DomainResponse.Success(
@@ -42,7 +42,7 @@ class LoginDataSource {
             val result = Connector.select(
                 USERS_TABLE, hashMapOf(
                     "email" to userLoginModel.email,
-                    "password" to MD5.encrypt(userLoginModel.password)
+                    "password" to userLoginModel.password.toSHA256()
                 )
             )
 
