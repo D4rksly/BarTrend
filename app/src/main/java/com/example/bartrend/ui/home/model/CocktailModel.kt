@@ -1,4 +1,4 @@
-package com.example.bartrend.ui.login.model
+package com.example.bartrend.ui.home.model
 
 data class CocktailModel(
     val name: String,
