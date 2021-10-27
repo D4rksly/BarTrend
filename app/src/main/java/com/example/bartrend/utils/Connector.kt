@@ -20,12 +20,16 @@ object Connector {
     private const val PORT = "3306"
     private const val DATABASE = "6Y7DlX2Fnq"
 
+    var strictPolicyEnabled = true
+
     private fun connect(): Connection? {
         return try {
-            val policy = StrictMode.ThreadPolicy.Builder().permitAll().build()
-            StrictMode.setThreadPolicy(policy)
+            if(strictPolicyEnabled) {
+                val policy = StrictMode.ThreadPolicy.Builder().permitAll().build()
+                StrictMode.setThreadPolicy(policy)
+            }
             DriverManager.getConnection(
-                "jdbc:mysql://$SERVER:$PORT/$DATABASE",
+                "jdbc:mysql://$SERVER:$PORT/$DATABASE?autoReconnect=true&useSSL=false",
                 DB_USERNAME,
                 DB_PASSWORD
             )
