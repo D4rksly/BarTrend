@@ -2,7 +2,7 @@ package com.example.bartrend.domain.repository
 
 import com.example.bartrend.domain.datasource.CocktailDataSource
 import com.example.bartrend.domain.model.extensions.toModel
-import com.example.bartrend.ui.home.model.CocktailModel
+import com.example.bartrend.ui.cocktail.model.CocktailModel
 import com.example.bartrend.utils.DomainResponse
 
 
