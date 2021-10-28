@@ -5,27 +5,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.example.bartrend.R
 import com.example.bartrend.databinding.FragmentLoginBinding
-import com.example.bartrend.domain.datasource.LoginDataSource
-import com.example.bartrend.domain.repository.LoginRepository
 import com.example.bartrend.ui.core.Navigation
+import com.example.bartrend.ui.core.ViewFragment
 import com.example.bartrend.ui.login.LoginViewModel
 import com.example.bartrend.ui.login.model.UserLoginModel
-import com.example.bartrend.utils.ViewModelFactory
 import com.example.bartrend.utils.extensions.navigate
 
-class LoginFragment: Fragment(R.layout.fragment_login) {
+class LoginFragment: ViewFragment<LoginViewModel>(R.layout.fragment_login) {
 
-    private lateinit var viewModel: LoginViewModel
     private lateinit var binding: FragmentLoginBinding
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        viewModel = ViewModelFactory.bind<LoginViewModel, LoginRepository, LoginDataSource>(this)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
