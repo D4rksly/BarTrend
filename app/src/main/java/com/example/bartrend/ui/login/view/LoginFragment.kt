@@ -1,9 +1,7 @@
 package com.example.bartrend.ui.login.view
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -16,24 +14,16 @@ import com.example.bartrend.ui.login.LoginViewModel
 import com.example.bartrend.ui.login.model.UserLoginModel
 import com.example.bartrend.utils.ViewModelFactory
 import com.example.bartrend.utils.extensions.navigate
+import com.example.bartrend.utils.extensions.viewBinding
 
 class LoginFragment: Fragment(R.layout.fragment_login) {
 
     private lateinit var viewModel: LoginViewModel
-    private lateinit var binding: FragmentLoginBinding
+    private val binding by viewBinding<FragmentLoginBinding>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel = ViewModelFactory.bind<LoginViewModel, LoginRepository, LoginDataSource>(this)
-    }
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        binding = FragmentLoginBinding.inflate(inflater, container, false)
-        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
