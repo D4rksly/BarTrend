@@ -14,6 +14,7 @@ import com.example.bartrend.ui.login.LoginViewModel
 import com.example.bartrend.ui.login.model.UserLoginModel
 import com.example.bartrend.utils.ViewModelFactory
 import com.example.bartrend.utils.extensions.navigate
+import com.example.bartrend.utils.extensions.navigateAndReset
 import com.example.bartrend.utils.extensions.viewBinding
 
 class LoginFragment: Fragment(R.layout.fragment_login) {
@@ -48,7 +49,7 @@ class LoginFragment: Fragment(R.layout.fragment_login) {
 
     private fun observeLogin(state: LoginViewModel.State) {
         when (state) {
-            is LoginViewModel.State.Success -> Toast.makeText(context, "Welcome! ${state.userModel.name}", Toast.LENGTH_SHORT).show()
+            is LoginViewModel.State.Success -> requireActivity().navigateAndReset(Navigation.HOME)
             is LoginViewModel.State.Error -> Toast.makeText(context, state.error, Toast.LENGTH_SHORT).show()
             is LoginViewModel.State.Loading -> Toast.makeText(context, "Loading", Toast.LENGTH_SHORT).show()
         }

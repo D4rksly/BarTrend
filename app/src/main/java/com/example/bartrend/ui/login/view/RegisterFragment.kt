@@ -9,12 +9,11 @@ import com.example.bartrend.R
 import com.example.bartrend.databinding.FragmentRegisterBinding
 import com.example.bartrend.domain.datasource.LoginDataSource
 import com.example.bartrend.domain.repository.LoginRepository
+import com.example.bartrend.ui.core.Navigation
 import com.example.bartrend.ui.login.LoginViewModel
 import com.example.bartrend.ui.login.model.UserRegisterModel
 import com.example.bartrend.utils.ViewModelFactory
-import com.example.bartrend.utils.extensions.back
-import com.example.bartrend.utils.extensions.isEmailValid
-import com.example.bartrend.utils.extensions.viewBinding
+import com.example.bartrend.utils.extensions.*
 
 class RegisterFragment: Fragment(R.layout.fragment_register) {
 
@@ -28,10 +27,10 @@ class RegisterFragment: Fragment(R.layout.fragment_register) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setupListeners()
+        setListeners()
     }
 
-    private fun setupListeners() {
+    private fun setListeners() {
         with(binding) {
             register.setOnClickListener {
                 if(areFieldsValid()) {
@@ -90,7 +89,7 @@ class RegisterFragment: Fragment(R.layout.fragment_register) {
 
     private fun observeLogin(state: LoginViewModel.State) {
         when (state) {
-            is LoginViewModel.State.Success -> Toast.makeText(context, "Welcome! ${state.userModel.name}", Toast.LENGTH_SHORT).show()
+            is LoginViewModel.State.Success -> requireActivity().navigateAndReset(Navigation.HOME)
             is LoginViewModel.State.Error -> Toast.makeText(context, state.error, Toast.LENGTH_SHORT).show()
             is LoginViewModel.State.Loading -> Toast.makeText(context, "Loading", Toast.LENGTH_SHORT).show()
         }
