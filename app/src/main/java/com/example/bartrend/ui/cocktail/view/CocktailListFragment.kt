@@ -6,7 +6,6 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.bartrend.R
 import com.example.bartrend.databinding.FragmentCocktailListBinding
 import com.example.bartrend.domain.datasource.CocktailDataSource
