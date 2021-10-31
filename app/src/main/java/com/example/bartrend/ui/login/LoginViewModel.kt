@@ -8,6 +8,7 @@ import com.example.bartrend.domain.repository.LoginRepository
 import com.example.bartrend.ui.login.model.UserLoginModel
 import com.example.bartrend.ui.login.model.UserModel
 import com.example.bartrend.ui.login.model.UserRegisterModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel() {
@@ -21,13 +22,13 @@ class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel()
     fun register(registerModel: UserRegisterModel): LiveData<State> {
         val result: MutableLiveData<State> = MutableLiveData(State.Loading)
 
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             loginRepository.checkEmailAvailability(registerModel.email)
                 .success {
                     loginRepository.register(registerModel)
-                        .success { result.value = State.Success(it) }
-                        .failure { result.value = State.Error(it) }
-                }.failure {  result.value = State.Error(it) }
+                        .success { result.postValue(State.Success(it)) }
+                        .failure { result.postValue(State.Error(it)) }
+                }.failure {  result.postValue(State.Error(it)) }
         }
 
         return result
@@ -35,12 +36,13 @@ class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel()
 
     fun login(loginModel: UserLoginModel): LiveData<State> {
         val result: MutableLiveData<State> = MutableLiveData(State.Loading)
-        viewModelScope.launch {
+
+        viewModelScope.launch(Dispatchers.IO) {
             loginRepository.login(loginModel)
                 .success {
-                    result.value = State.Success(it)
+                    result.postValue(State.Success(it))
                 }.failure {
-                    result.value = State.Error(it)
+                    result.postValue(State.Error(it))
                 }
         }
         return result

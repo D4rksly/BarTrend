@@ -19,12 +19,12 @@ class CocktailViewModel(private val cocktailRepository: CocktailRepository) : Vi
     fun getCocktails(): LiveData<State> {
         val result: MutableLiveData<State> = MutableLiveData(State.Loading)
 
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             cocktailRepository.getCocktails()
                 .success {
-                     result.value = State.Success(it)
+                    result.postValue(State.Success(it))
                 }.failure {
-                    result.value = State.Error(it)
+                    result.postValue(State.Error(it))
                 }
         }
 
