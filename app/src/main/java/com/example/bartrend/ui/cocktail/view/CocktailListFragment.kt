@@ -31,7 +31,7 @@ class CocktailListFragment: Fragment(R.layout.fragment_cocktail_list) {
         super.onViewCreated(view, savedInstanceState)
         setObservers()
         setAdapters()
-        //setListeners()
+        setListeners()
     }
 
     private fun setObservers() {
@@ -46,7 +46,12 @@ class CocktailListFragment: Fragment(R.layout.fragment_cocktail_list) {
 
     private fun setListeners() {
         with(binding) {
-            TODO("Add refresh listener")
+            cocktailsListRefresh.setOnRefreshListener {
+                viewModel.getCocktails().observe(viewLifecycleOwner) {
+                    observeCocktails(it)
+                    cocktailsListRefresh.isRefreshing = false
+                }
+            }
         }
     }
 

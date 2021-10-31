@@ -16,8 +16,9 @@ class ViewModelFactory<V : ViewModel, R, D>(
         }
     }
 
+
     @Suppress("UNCHECKED_CAST")
-    override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
         val dataSourceInstance = dataSource.newInstance()
         val repositoryInstance = repository.getConstructor(dataSource).newInstance(dataSourceInstance)
         return viewModel.getConstructor(repository).newInstance(repositoryInstance) as T
