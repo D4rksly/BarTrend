@@ -25,12 +25,19 @@ class LoginDataSource @Inject constructor() {
                 "password" to userRegisterModel.password.toSHA256()
             ))
 
-            DomainResponse.Success(
-                UserModelResponse(
-                    email = userRegisterModel.email,
-                    name = userRegisterModel.name
+            val result = Connector.select(USERS_TABLE, Pair("email", userRegisterModel.email))
+
+            if(result.next()) {
+                DomainResponse.Success(
+                    UserModelResponse(
+                        id = result.getInt("id"),
+                        email = userRegisterModel.email,
+                        name = userRegisterModel.name
+                    )
                 )
-            )
+            } else {
+                DomainResponse.Error("Id was not created")
+            }
         } catch (ex: NullPointerException) {
             DomainResponse.Error("Connection Failed")
         } catch (ex: SQLIntegrityConstraintViolationException) {
@@ -50,6 +57,7 @@ class LoginDataSource @Inject constructor() {
             return if(result.next()) {
                 DomainResponse.Success(
                     UserModelResponse(
+                        id = result.getInt("id"),
                         email = result.getString("email"),
                         name = result.getString("name")
                     )
