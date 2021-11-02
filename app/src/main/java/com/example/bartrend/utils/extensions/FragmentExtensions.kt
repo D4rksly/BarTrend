@@ -4,6 +4,7 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.*
 import androidx.viewbinding.ViewBinding
+import com.example.bartrend.ui.core.MainActivity
 import kotlin.properties.ReadOnlyProperty
 import kotlin.reflect.KProperty
 
@@ -40,5 +41,6 @@ class FragmentViewBindingDelegate<T : ViewBinding>(private val fragment: Fragmen
             }
         }
     }
-
 }
+
+fun Fragment.getComponent() = (requireActivity() as MainActivity).component

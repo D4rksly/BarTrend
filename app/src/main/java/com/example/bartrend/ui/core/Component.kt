@@ -28,37 +28,15 @@ abstract class MainModule {
 
 }
 
+@Singleton
+@Component(modules = [ApplicationComponent.Module::class, MainModule::class])
+interface ApplicationComponent {
+    fun inject(activity: MainActivity)
 
-@Subcomponent(modules = [MainComponent.Module::class])
-interface MainComponent {
     fun inject(fragment: LoginFragment)
     fun inject(fragment: RegisterFragment)
 
     fun inject(fragment: CocktailListFragment)
-
-    @Subcomponent.Builder
-    interface Builder {
-        fun build(): MainComponent
-    }
-
-    @dagger.Module
-    abstract class Module {
-
-    }
-}
-
-@Singleton
-@Component(modules = [
-    ApplicationComponent.Module::class,
-    MainComponent.Module::class,
-    MainModule::class
-])
-interface ApplicationComponent {
-    fun inject(activity: MainActivity)
-
-    fun viewModelFactory(): ViewModelFactory
-
-    fun mainComponent(): MainComponent.Builder
 
     @Component.Builder
     interface Builder {
@@ -68,6 +46,7 @@ interface ApplicationComponent {
 
     @dagger.Module
     class Module(private val activity: MainActivity) {
+        @Singleton
         @Provides
         fun provideViewModelFactory(
             viewModels: MutableMap<Class<out ViewModel>, Provider<ViewModel>>

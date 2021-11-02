@@ -8,11 +8,11 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.example.bartrend.R
 import com.example.bartrend.databinding.FragmentLoginBinding
-import com.example.bartrend.ui.core.MainActivity
 import com.example.bartrend.ui.core.Navigation
 import com.example.bartrend.ui.login.LoginViewModel
 import com.example.bartrend.ui.login.model.UserLoginModel
 import com.example.bartrend.utils.ViewModelFactory
+import com.example.bartrend.utils.extensions.getComponent
 import com.example.bartrend.utils.extensions.navigate
 import com.example.bartrend.utils.extensions.navigateAndReset
 import com.example.bartrend.utils.extensions.viewBinding
@@ -27,7 +27,7 @@ class LoginFragment: Fragment(R.layout.fragment_login) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        (requireActivity() as MainActivity).provideMainComponent().inject(this)
+        getComponent().inject(this)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

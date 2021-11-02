@@ -9,14 +9,11 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.bartrend.R
 import com.example.bartrend.databinding.FragmentCocktailListBinding
-import com.example.bartrend.domain.datasource.CocktailDataSource
-import com.example.bartrend.domain.repository.CocktailRepository
 import com.example.bartrend.ui.cocktail.CocktailViewModel
 import com.example.bartrend.ui.cocktail.CocktailViewModel.State
 import com.example.bartrend.ui.cocktail.adapter.CocktailsAdapter
-import com.example.bartrend.ui.core.MainActivity
-import com.example.bartrend.ui.login.LoginViewModel
 import com.example.bartrend.utils.ViewModelFactory
+import com.example.bartrend.utils.extensions.getComponent
 import com.example.bartrend.utils.extensions.viewBinding
 import javax.inject.Inject
 
@@ -30,7 +27,7 @@ class CocktailListFragment: Fragment(R.layout.fragment_cocktail_list) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        (requireActivity() as MainActivity).provideMainComponent().inject(this)
+        getComponent().inject(this)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

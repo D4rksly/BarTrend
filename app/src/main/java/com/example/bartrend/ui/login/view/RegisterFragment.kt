@@ -8,9 +8,6 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.example.bartrend.R
 import com.example.bartrend.databinding.FragmentRegisterBinding
-import com.example.bartrend.domain.datasource.LoginDataSource
-import com.example.bartrend.domain.repository.LoginRepository
-import com.example.bartrend.ui.core.MainActivity
 import com.example.bartrend.ui.core.Navigation
 import com.example.bartrend.ui.login.LoginViewModel
 import com.example.bartrend.ui.login.model.UserRegisterModel
@@ -27,7 +24,7 @@ class RegisterFragment: Fragment(R.layout.fragment_register) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        (requireActivity() as MainActivity).provideMainComponent().inject(this)
+        getComponent().inject(this)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

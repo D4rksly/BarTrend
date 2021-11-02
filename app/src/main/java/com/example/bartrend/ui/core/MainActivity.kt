@@ -8,10 +8,7 @@ import com.example.bartrend.utils.extensions.navigate
 
 
 class MainActivity : AppCompatActivity() {
-    private lateinit var component: ApplicationComponent
-
-    fun provideMainComponent() = component.mainComponent().build()
-
+    lateinit var component: ApplicationComponent
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
