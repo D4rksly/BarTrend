@@ -4,6 +4,7 @@ import java.sql.Blob
 import java.util.*
 
 data class CocktailResponse(
+    val id: Int,
     val name: String,
     val description: String,
     val image: Blob,

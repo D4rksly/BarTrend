@@ -16,5 +16,5 @@ fun UserLoginModel.toRequest() = UserLoginRequest(
 )
 
 fun UserModelResponse.toModel() = UserModel(
-    email, name
+    id, email, name
 )

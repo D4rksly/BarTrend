@@ -21,6 +21,7 @@ class CocktailDataSource @Inject constructor(){
             while(result.next()) {
                 response.add(
                     CocktailResponse(
+                        result.getInt("id"),
                         result.getString("name"),
                         result.getString("description"),
                         result.getBlob("image"),
