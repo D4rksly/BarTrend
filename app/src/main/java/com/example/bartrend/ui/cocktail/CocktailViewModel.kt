@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.bartrend.domain.repository.CocktailRepository
 import com.example.bartrend.ui.cocktail.model.CocktailModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class CocktailViewModel(private val cocktailRepository: CocktailRepository) : ViewModel() {

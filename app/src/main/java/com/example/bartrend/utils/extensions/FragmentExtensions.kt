@@ -2,9 +2,7 @@ package com.example.bartrend.utils.extensions
 
 import android.view.View
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleObserver
-import androidx.lifecycle.OnLifecycleEvent
+import androidx.lifecycle.*
 import androidx.viewbinding.ViewBinding
 import kotlin.properties.ReadOnlyProperty
 import kotlin.reflect.KProperty
@@ -18,11 +16,12 @@ class FragmentViewBindingDelegate<T : ViewBinding>(private val fragment: Fragmen
 
     init {
         fragment.lifecycle.addObserver(
-            object : LifecycleObserver {
-                @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
-                fun onCreate() {
-                    fragment.viewLifecycleOwnerLiveData.observe(fragment) { viewLifecycleOwner ->
-                        viewLifecycleOwner.lifecycle.addObserver(ViewLifecycleBinding())
+            object : LifecycleEventObserver {
+                override fun onStateChanged(source: LifecycleOwner, event: Lifecycle.Event) {
+                    if(event == Lifecycle.Event.ON_CREATE) {
+                        fragment.viewLifecycleOwnerLiveData.observe(fragment, Observer { viewLifecycleOwner ->
+                            viewLifecycleOwner.lifecycle.addObserver(ViewLifecycleBinding())
+                        })
                     }
                 }
             }
@@ -33,11 +32,12 @@ class FragmentViewBindingDelegate<T : ViewBinding>(private val fragment: Fragmen
     override fun getValue(thisRef: Fragment, property: KProperty<*>): T =
         binding ?: (bindMethod.invoke(null, thisRef.requireView()) as T).also { binding = it }
 
-    inner class ViewLifecycleBinding : LifecycleObserver {
-        @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
-        internal fun onDestroy() {
-            binding = null
-            fragment.lifecycle.removeObserver(this)
+    inner class ViewLifecycleBinding : LifecycleEventObserver {
+        override fun onStateChanged(source: LifecycleOwner, event: Lifecycle.Event) {
+            if(event == Lifecycle.Event.ON_DESTROY) {
+                binding = null
+                fragment.lifecycle.removeObserver(this)
+            }
         }
     }
 
