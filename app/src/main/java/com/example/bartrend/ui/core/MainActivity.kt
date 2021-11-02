@@ -8,10 +8,17 @@ import com.example.bartrend.utils.extensions.navigate
 
 
 class MainActivity : AppCompatActivity() {
+    private lateinit var component: ApplicationComponent
+
+    fun provideMainComponent() = component.mainComponent().build()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        component = DaggerApplicationComponent.builder().module(ApplicationComponent.Module(this)).build()
+        component.inject(this)
 
         navigate(Navigation.LOGIN)
     }

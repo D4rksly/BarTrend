@@ -8,8 +8,9 @@ import com.example.bartrend.domain.repository.CocktailRepository
 import com.example.bartrend.ui.cocktail.model.CocktailModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class CocktailViewModel(private val cocktailRepository: CocktailRepository) : ViewModel() {
+class CocktailViewModel @Inject constructor(private val cocktailRepository: CocktailRepository) : ViewModel() {
 
     sealed class State {
         data class Success(val cocktails: List<CocktailModel>): State()

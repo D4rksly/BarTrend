@@ -4,25 +4,30 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.example.bartrend.R
 import com.example.bartrend.databinding.FragmentRegisterBinding
 import com.example.bartrend.domain.datasource.LoginDataSource
 import com.example.bartrend.domain.repository.LoginRepository
+import com.example.bartrend.ui.core.MainActivity
 import com.example.bartrend.ui.core.Navigation
 import com.example.bartrend.ui.login.LoginViewModel
 import com.example.bartrend.ui.login.model.UserRegisterModel
 import com.example.bartrend.utils.ViewModelFactory
 import com.example.bartrend.utils.extensions.*
+import javax.inject.Inject
 
 class RegisterFragment: Fragment(R.layout.fragment_register) {
 
-    private lateinit var viewModel: LoginViewModel
+    @Inject  internal lateinit var viewModelFactory: ViewModelFactory
+
+    private val viewModel: LoginViewModel by viewModels { viewModelFactory }
     private val binding by viewBinding<FragmentRegisterBinding>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel = ViewModelFactory.bind<LoginViewModel, LoginRepository, LoginDataSource>(this)
+        (requireActivity() as MainActivity).provideMainComponent().inject(this)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

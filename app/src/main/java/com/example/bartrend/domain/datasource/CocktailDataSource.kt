@@ -5,8 +5,9 @@ import com.example.bartrend.domain.model.response.CocktailResponse
 import com.example.bartrend.utils.Connector
 import com.example.bartrend.utils.DomainResponse
 import java.lang.NullPointerException
+import javax.inject.Inject
 
-class CocktailDataSource {
+class CocktailDataSource @Inject constructor(){
     companion object {
         private const val COCKTAILS_TABLE = "Cocktails"
     }

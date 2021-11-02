@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.bartrend.R
@@ -13,17 +14,23 @@ import com.example.bartrend.domain.repository.CocktailRepository
 import com.example.bartrend.ui.cocktail.CocktailViewModel
 import com.example.bartrend.ui.cocktail.CocktailViewModel.State
 import com.example.bartrend.ui.cocktail.adapter.CocktailsAdapter
+import com.example.bartrend.ui.core.MainActivity
+import com.example.bartrend.ui.login.LoginViewModel
 import com.example.bartrend.utils.ViewModelFactory
 import com.example.bartrend.utils.extensions.viewBinding
+import javax.inject.Inject
 
 class CocktailListFragment: Fragment(R.layout.fragment_cocktail_list) {
 
-    private lateinit var viewModel: CocktailViewModel
+    @Inject
+    internal lateinit var viewModelFactory: ViewModelFactory
+
+    private val viewModel: CocktailViewModel by viewModels { viewModelFactory }
     private val binding by viewBinding<FragmentCocktailListBinding>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel = ViewModelFactory.bind<CocktailViewModel, CocktailRepository, CocktailDataSource>(this)
+        (requireActivity() as MainActivity).provideMainComponent().inject(this)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
