@@ -10,8 +10,9 @@ import com.example.bartrend.ui.login.model.UserModel
 import com.example.bartrend.ui.login.model.UserRegisterModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel() {
+class LoginViewModel @Inject constructor(private val loginRepository: LoginRepository) : ViewModel() {
 
     sealed class State {
         data class Success(val userModel: UserModel): State()

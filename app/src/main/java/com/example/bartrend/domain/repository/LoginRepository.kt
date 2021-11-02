@@ -7,8 +7,9 @@ import com.example.bartrend.ui.login.model.UserLoginModel
 import com.example.bartrend.ui.login.model.UserModel
 import com.example.bartrend.ui.login.model.UserRegisterModel
 import com.example.bartrend.utils.DomainResponse
+import javax.inject.Inject
 
-class LoginRepository(private val loginDataSource: LoginDataSource) {
+class LoginRepository @Inject constructor(private val loginDataSource: LoginDataSource) {
 
     var activeUser: UserModel? = null
 

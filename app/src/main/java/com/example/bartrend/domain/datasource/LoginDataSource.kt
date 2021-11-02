@@ -8,8 +8,9 @@ import com.example.bartrend.utils.DomainResponse
 import com.example.bartrend.utils.extensions.toSHA256
 import java.lang.NullPointerException
 import java.sql.SQLIntegrityConstraintViolationException
+import javax.inject.Inject
 
-class LoginDataSource {
+class LoginDataSource @Inject constructor() {
 
     companion object {
         private const val USERS_TABLE = "Users"
