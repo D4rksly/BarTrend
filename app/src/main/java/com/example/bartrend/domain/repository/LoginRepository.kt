@@ -13,6 +13,10 @@ class LoginRepository @Inject constructor(private val loginDataSource: LoginData
 
     var activeUser: UserModel? = null
 
+    fun getUser(): UserModel {
+        return activeUser ?: error("User does not exist")
+    }
+
     fun register(userRegisterModel: UserRegisterModel): DomainResponse<UserModel> {
         return loginDataSource.register(userRegisterModel.toRequest()).mapSuccess {
             val model = it.toModel()

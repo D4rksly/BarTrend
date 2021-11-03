@@ -8,13 +8,18 @@ import com.example.bartrend.ui.login.model.UserModel
 import com.example.bartrend.ui.login.model.UserRegisterModel
 
 fun UserRegisterModel.toRequest() = UserRegisterRequest(
-    email, name, password
+    email = email,
+    name = name,
+    password = password
 )
 
 fun UserLoginModel.toRequest() = UserLoginRequest(
-    email, password
+    email = email,
+    password = password
 )
 
 fun UserModelResponse.toModel() = UserModel(
-    id, email, name
+    id = id,
+    email = email,
+    name = name
 )
