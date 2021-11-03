@@ -8,5 +8,6 @@ data class CocktailModel(
     val name: String,
     val description: String,
     val image: Bitmap,
-    val dateAdded: Date
+    val dateAdded: Date,
+    val favorite: Boolean? = null
 )
