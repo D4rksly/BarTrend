@@ -17,7 +17,13 @@ class FavoriteRepository @Inject constructor(private val favoriteDataSource: Fav
         }
     }
 
-    fun setFavorite(favoriteModel: FavoriteModel): DomainResponse<Unit> {
-        return favoriteDataSource.setFavorite(favoriteModel.toRequest())
+    fun setFavorite(favoriteModel: FavoriteModel, isFavorite: Boolean): DomainResponse<Unit> {
+        return favoriteDataSource.let {
+            if(isFavorite) {
+                it.addFavorite(favoriteModel.toRequest())
+            } else {
+                it.removeFavorite(favoriteModel.toRequest())
+            }
+        }
     }
 }

@@ -17,17 +17,24 @@ class CocktailsAdapter(private val cocktails: List<CocktailModel>, private val d
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder =
         ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.template_cocktail, parent, false))
 
-
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val cocktail = cocktails[position]
 
         holder.apply {
             cocktailTextView.text = cocktail.name
             cocktailImageView.background = BitmapDrawable(context.resources, cocktail.image)
+            cocktailFavorite.setImageResource(R.drawable.icon_favorite
+                .takeIf { cocktail.favorite == true }
+                ?: R.drawable.icon_favorite_border)
+
+            if(cocktail.favorite == true)
+                isFavorite = true
+
             cocktailFavorite.setOnClickListener {
                 cocktailFavorite.setImageResource(R.drawable.icon_favorite_border
                         .takeIf { isFavorite }
                         ?: R.drawable.icon_favorite)
+
                 isFavorite = !isFavorite
                 delegate.onToggleFavorite(isFavorite, cocktail.id)
             }

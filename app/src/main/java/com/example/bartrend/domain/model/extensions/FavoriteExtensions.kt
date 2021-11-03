@@ -8,12 +8,12 @@ import com.example.bartrend.ui.cocktail.model.FavoriteModel
 import com.example.bartrend.ui.cocktail.model.FavoriteUserModel
 
 fun FavoriteUserModel.toRequest() = FavoriteUserRequest(
-    userId = user.id
+    user_id = user.id
 )
 
 fun FavoriteModel.toRequest() = FavoriteRequest(
-    userId = user.id,
-    cocktailId = cocktailId
+    user_id = user.id,
+    cocktail_id = cocktailId
 )
 
 fun FavoriteCocktailResponse.toModel() =  cocktails.map {

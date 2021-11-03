@@ -17,7 +17,7 @@ class FavoriteDataSource @Inject constructor() {
     fun getFavorites(userFavoriteRequest: FavoriteUserRequest): DomainResponse<FavoriteCocktailResponse> {
         return try {
 
-            val result = Connector.select(FAVORITE_TABLE, Pair("user_id", userFavoriteRequest.userId))
+            val result = Connector.select(FAVORITE_TABLE, Pair("user_id", userFavoriteRequest.user_id))
             val response = mutableListOf<Int>()
 
             while(result.next()) {
@@ -32,9 +32,21 @@ class FavoriteDataSource @Inject constructor() {
         }
     }
 
-    fun setFavorite(favoriteRequest: FavoriteRequest): DomainResponse<Unit> {
+    fun addFavorite(favoriteRequest: FavoriteRequest): DomainResponse<Unit> {
         return try {
             Connector.insert(FAVORITE_TABLE, favoriteRequest)
+            DomainResponse.Success(Unit)
+        } catch (ex: NullPointerException) {
+            DomainResponse.Error("Connection Failed")
+        }
+    }
+
+    fun removeFavorite(favoriteRequest: FavoriteRequest): DomainResponse<Unit> {
+        return try {
+            Connector.delete(FAVORITE_TABLE, hashMapOf(
+                "user_id" to favoriteRequest.user_id,
+                "cocktail_id" to favoriteRequest.cocktail_id
+            ))
             DomainResponse.Success(Unit)
         } catch (ex: NullPointerException) {
             DomainResponse.Error("Connection Failed")

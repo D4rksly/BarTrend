@@ -11,7 +11,9 @@ import javax.inject.Inject
 
 class LoginRepository @Inject constructor(private val loginDataSource: LoginDataSource) {
 
-    var activeUser: UserModel? = null
+    companion object {
+        private var activeUser: UserModel? = null
+    }
 
     fun getUser(): UserModel {
         return activeUser ?: error("User does not exist")

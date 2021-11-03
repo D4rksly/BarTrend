@@ -33,14 +33,21 @@ class CocktailViewModel @Inject constructor(
 
     fun getCocktails(): LiveData<State> {
         val result: MutableLiveData<State> = MutableLiveData(State.Loading)
+        val user: UserModel = loginRepository.getUser()
 
         viewModelScope.launch(Dispatchers.IO) {
-            cocktailRepository.getCocktails()
-                .success {
-                    result.postValue(State.CocktailSuccess(it))
+            cocktailRepository.getCocktails().success { cocktails ->
+                favoriteRepository.getFavorites(FavoriteUserModel(user)).success { favorites ->
+                    cocktails.forEach { cocktail ->
+                        cocktail.favorite = favorites.any { it.cocktailId == cocktail.id }
+                    }
+                    result.postValue(State.CocktailSuccess(cocktails))
                 }.failure {
                     result.postValue(State.Error(it))
                 }
+            }.failure {
+                result.postValue(State.Error(it))
+            }
         }
 
         return result
@@ -62,12 +69,12 @@ class CocktailViewModel @Inject constructor(
         return result
     }
 
-    fun setFavorite(cocktailId: Int): LiveData<State> {
+    fun setFavorite(cocktailId: Int, isFavorite: Boolean): LiveData<State> {
         val result: MutableLiveData<State> = MutableLiveData(State.Loading)
         val user: UserModel = loginRepository.getUser()
 
         viewModelScope.launch(Dispatchers.IO) {
-            favoriteRepository.setFavorite(FavoriteModel(user, cocktailId))
+            favoriteRepository.setFavorite(FavoriteModel(user, cocktailId), isFavorite)
                 .success {
                     result.postValue(State.SetFavoriteSuccess)
                 }.failure {

@@ -13,6 +13,8 @@ import com.example.bartrend.ui.cocktail.CocktailViewModel
 import com.example.bartrend.ui.cocktail.CocktailViewModel.State
 import com.example.bartrend.ui.cocktail.adapter.CocktailsAdapter
 import com.example.bartrend.ui.cocktail.adapter.CocktailsAdapterDelegate
+import com.example.bartrend.ui.cocktail.model.CocktailModel
+import com.example.bartrend.ui.cocktail.model.FavoriteCocktailModel
 import com.example.bartrend.utils.ViewModelFactory
 import com.example.bartrend.utils.extensions.getComponent
 import com.example.bartrend.utils.extensions.viewBinding
@@ -25,6 +27,9 @@ class CocktailListFragment: Fragment(R.layout.fragment_cocktail_list), Cocktails
 
     private val viewModel: CocktailViewModel by viewModels { viewModelFactory }
     private val binding by viewBinding<FragmentCocktailListBinding>()
+
+    private var cocktails: List<CocktailModel>? = null
+    private var favoriteCocktails: List<FavoriteCocktailModel>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,7 +44,7 @@ class CocktailListFragment: Fragment(R.layout.fragment_cocktail_list), Cocktails
     }
 
     private fun setObservers() {
-        viewModel.getCocktails().observe(viewLifecycleOwner, Observer(::observeCocktails))
+        viewModel.getCocktails().observe(viewLifecycleOwner, ::observe)
     }
 
     private fun setAdapters() {
@@ -52,26 +57,28 @@ class CocktailListFragment: Fragment(R.layout.fragment_cocktail_list), Cocktails
         with(binding) {
             cocktailsListRefresh.setOnRefreshListener {
                 viewModel.getCocktails().observe(viewLifecycleOwner) {
-                    observeCocktails(it)
+                    observe(it)
                     cocktailsListRefresh.isRefreshing = false
                 }
             }
         }
     }
 
-    private fun observeCocktails(state: State) {
+    private fun observe(state: State) {
         when (state) {
             is State.CocktailSuccess -> {
                 with(binding) {
-                    cocktailsList.adapter = CocktailsAdapter(state.cocktails)
+                    cocktailsList.adapter = CocktailsAdapter(state.cocktails, this@CocktailListFragment)
                 }
             }
+            is State.FavoriteSuccess -> { /* Unreachable */ }
+            is State.SetFavoriteSuccess -> Toast.makeText(context, "Saved Successfully", Toast.LENGTH_SHORT).show()
             is State.Error -> Toast.makeText(context, state.error, Toast.LENGTH_SHORT).show()
             is State.Loading -> Toast.makeText(context, "Loading", Toast.LENGTH_SHORT).show()
         }
     }
 
     override fun onToggleFavorite(isFavorite: Boolean, cocktailId: Int) {
-
+        viewModel.setFavorite(cocktailId, isFavorite).observe(viewLifecycleOwner, Observer(::observe))
     }
 }

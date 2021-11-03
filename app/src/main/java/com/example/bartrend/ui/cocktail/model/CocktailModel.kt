@@ -9,5 +9,5 @@ data class CocktailModel(
     val description: String,
     val image: Bitmap,
     val dateAdded: Date,
-    val favorite: Boolean? = null
+    var favorite: Boolean? = null
 )

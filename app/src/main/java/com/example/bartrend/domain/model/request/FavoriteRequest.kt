@@ -1,10 +1,10 @@
 package com.example.bartrend.domain.model.request
 
 data class FavoriteUserRequest(
-    val userId: Int
+    val user_id: Int
 )
 
 data class FavoriteRequest(
-    val userId: Int,
-    val cocktailId: Int
+    val user_id: Int,
+    val cocktail_id: Int
 )
