@@ -9,7 +9,9 @@
         android:id="@+id/cocktails_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginHorizontal="5dp"
-        tools:listitem="@layout/template_cocktail" />
+        android:paddingHorizontal="5dp"
+        tools:listitem="@layout/template_cocktail"
+        android:paddingBottom="20dp"
+        android:clipToPadding="false"/>
 
 </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
