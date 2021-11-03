@@ -13,7 +13,7 @@ fun FavoriteUserModel.toRequest() = FavoriteUserRequest(
 
 fun FavoriteModel.toRequest() = FavoriteRequest(
     userId = user.id,
-    cocktailId = cocktail.id
+    cocktailId = cocktailId
 )
 
 fun FavoriteCocktailResponse.toModel() =  cocktails.map {

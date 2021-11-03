@@ -11,10 +11,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.bartrend.R
 import com.example.bartrend.ui.cocktail.model.CocktailModel
 
-class CocktailsAdapter(private val cocktails: List<CocktailModel>):
+class CocktailsAdapter(private val cocktails: List<CocktailModel>, private val delegate: CocktailsAdapterDelegate):
     RecyclerView.Adapter<CocktailsAdapter.ViewHolder>() {
-
-    var onToggleFavorite: (Boolean) -> Unit = { }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder =
         ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.template_cocktail, parent, false))
@@ -31,7 +29,7 @@ class CocktailsAdapter(private val cocktails: List<CocktailModel>):
                         .takeIf { isFavorite }
                         ?: R.drawable.icon_favorite)
                 isFavorite = !isFavorite
-                onToggleFavorite(isFavorite)
+                delegate.onToggleFavorite(isFavorite, cocktail.id)
             }
         }
     }

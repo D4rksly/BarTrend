@@ -12,12 +12,13 @@ import com.example.bartrend.databinding.FragmentCocktailListBinding
 import com.example.bartrend.ui.cocktail.CocktailViewModel
 import com.example.bartrend.ui.cocktail.CocktailViewModel.State
 import com.example.bartrend.ui.cocktail.adapter.CocktailsAdapter
+import com.example.bartrend.ui.cocktail.adapter.CocktailsAdapterDelegate
 import com.example.bartrend.utils.ViewModelFactory
 import com.example.bartrend.utils.extensions.getComponent
 import com.example.bartrend.utils.extensions.viewBinding
 import javax.inject.Inject
 
-class CocktailListFragment: Fragment(R.layout.fragment_cocktail_list) {
+class CocktailListFragment: Fragment(R.layout.fragment_cocktail_list), CocktailsAdapterDelegate {
 
     @Inject
     internal lateinit var viewModelFactory: ViewModelFactory
@@ -60,7 +61,7 @@ class CocktailListFragment: Fragment(R.layout.fragment_cocktail_list) {
 
     private fun observeCocktails(state: State) {
         when (state) {
-            is State.Success -> {
+            is State.CocktailSuccess -> {
                 with(binding) {
                     cocktailsList.adapter = CocktailsAdapter(state.cocktails)
                 }
@@ -68,5 +69,9 @@ class CocktailListFragment: Fragment(R.layout.fragment_cocktail_list) {
             is State.Error -> Toast.makeText(context, state.error, Toast.LENGTH_SHORT).show()
             is State.Loading -> Toast.makeText(context, "Loading", Toast.LENGTH_SHORT).show()
         }
+    }
+
+    override fun onToggleFavorite(isFavorite: Boolean, cocktailId: Int) {
+
     }
 }

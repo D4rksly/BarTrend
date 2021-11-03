@@ -8,7 +8,7 @@ data class FavoriteUserModel(
 
 data class FavoriteModel(
     val user: UserModel,
-    val cocktail: CocktailModel
+    val cocktailId: Int
 )
 
 data class FavoriteCocktailModel(
